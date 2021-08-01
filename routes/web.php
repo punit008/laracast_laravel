@@ -26,7 +26,7 @@ Route::get('/posts', function () {
 Route::get('/post/{post}', function ($slug) {
 
     $path = __DIR__ . "/../resources/views/posts/{$slug}.html";
-    
+
     if( !file_exists($path) ) {
         return redirect('/posts');
         ddd('file does not exits');
@@ -39,4 +39,8 @@ Route::get('/post/{post}', function ($slug) {
     ]);
 
     // return view('post');
-});
+})
+//->where('post', '[A-z]+') // Find one or more upper or lowercase letter and nothing else
+->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
+//->whereAlpha('post') // Laravel helper function where it should be upper or lowercase letter and nothing else
+;
