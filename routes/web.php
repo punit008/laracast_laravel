@@ -14,5 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    // return "hello world"; // pass the string to the page
+    // return ['foo' => 'bar']; // can pass the json to the page
 });
