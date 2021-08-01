@@ -32,7 +32,14 @@ Route::get('/post/{post}', function ($slug) {
         ddd('file does not exits');
     }
 
-    $post =  file_get_contents($path);
+    /**
+     * Caching in laravel  
+     */ 
+
+     $post = cache()->remember("posts.{$slug}", 1200, function () use ($path) {
+         var_dump($path);
+        return  file_get_contents($path);
+     }); // In timer you can use helper like now()->addMinutes(20);
 
     return view('post', [
         'post' =>  $post 
