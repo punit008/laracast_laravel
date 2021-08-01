@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
+    return view('welcome'); // Renders the php file that is present in the resources -> view (folder) -> welcome.blade.php
     // return "hello world"; // pass the string to the page
     // return ['foo' => 'bar']; // can pass the json to the page
 });
