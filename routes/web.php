@@ -18,3 +18,11 @@ Route::get('/', function () {
     // return "hello world"; // pass the string to the page
     // return ['foo' => 'bar']; // can pass the json to the page
 });
+
+Route::get('/posts', function () {
+    return view('posts');
+});
+
+Route::get('/post', function () {
+    return view('post');
+});
