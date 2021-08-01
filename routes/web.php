@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,30 +21,24 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', function () {
-    return view('posts');
+    $posts = Post::all();
+  
+    return view('posts',
+        [
+            'posts' => $posts
+        ]
+    );
 });
 
 Route::get('/post/{post}', function ($slug) {
-
-    $path = __DIR__ . "/../resources/views/posts/{$slug}.html";
-
-    if( !file_exists($path) ) {
-        return redirect('/posts');
-        ddd('file does not exits');
-    }
-
-    /**
-     * Caching in laravel  
-     */ 
-
-     $post = cache()->remember("posts.{$slug}", 1200, function () use ($path) {
-         var_dump($path);
-        return  file_get_contents($path);
-     }); // In timer you can use helper like now()->addMinutes(20);
+    // Find a post by its slug and pass it to a view called "post"
+    $post = Post::find($slug);
 
     return view('post', [
-        'post' =>  $post 
+        'post' => $post
     ]);
+
+
 
     // return view('post');
 })
