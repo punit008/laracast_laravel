@@ -23,10 +23,20 @@ Route::get('/posts', function () {
     return view('posts');
 });
 
-Route::get('/post', function () {
+Route::get('/post/{post}', function ($slug) {
+
+    $path = __DIR__ . "/../resources/views/posts/{$slug}.html";
+    
+    if( !file_exists($path) ) {
+        return redirect('/posts');
+        ddd('file does not exits');
+    }
+
+    $post =  file_get_contents($path);
 
     return view('post', [
-        'post' => '<h1>Hello World</h1>' //$post
+        'post' =>  $post 
     ]);
+
     // return view('post');
 });
