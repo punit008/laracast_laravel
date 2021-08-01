@@ -13,6 +13,7 @@
 </head>
 <body>
     <article>
+        <?= $post; ?>
         <h1> <a href="/post"> My first post</a></h1>
 
         <p>
