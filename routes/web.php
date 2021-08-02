@@ -27,24 +27,52 @@ Route::get('/posts', function () {
 
     $files = FacadesFile::files(resource_path("views/posts"));
 
-    $posts = [];
+    // $posts = [];
 
-    foreach ($files as $file) {
+    // collect an array an wrap them with in collection
+    // $posts = collect($files)->map(function ($file) {
 
-       $document =  YamlFrontMatter::parseFile( $file );
-       $posts[] = new Post(
-           $document->title,
-           $document->excerpt,
-           $document->date,
-           $document->body,
-           $document->slug
-       );
 
-    }
+    //     return YamlFrontMatter::parseFile($file);
+    // })
+    //     ->map(function ($document) {
+    //         return new Post(
+    //             $document->title,
+    //             $document->excerpt,
+    //             $document->date,
+    //             $document->body,
+    //             $document->slug
+    //         );
+    //     });
 
-    // $posts = Post::all();
+    // $posts = array_map(function ($file) {
+    //     $document =  YamlFrontMatter::parseFile( $file );
+    //     return new Post(
+    //        $document->title,
+    //        $document->excerpt,
+    //        $document->date,
+    //        $document->body,
+    //        $document->slug
+    //     );
+    // }, $files);
 
-    return view('posts',
+    // foreach ($files as $file) {
+
+    //    $document =  YamlFrontMatter::parseFile( $file );
+    //    $posts[] = new Post(
+    //        $document->title,
+    //        $document->excerpt,
+    //        $document->date,
+    //        $document->body,
+    //        $document->slug
+    //    );
+
+    // }
+
+    $posts = Post::all();
+
+    return view(
+        'posts',
         [
             'posts' => $posts
         ]
@@ -63,7 +91,7 @@ Route::get('/post/{post}', function ($slug) {
 
     // return view('post');
 })
-//->where('post', '[A-z]+') // Find one or more upper or lowercase letter and nothing else
-->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
-//->whereAlpha('post') // Laravel helper function where it should be upper or lowercase letter and nothing else
+    //->where('post', '[A-z]+') // Find one or more upper or lowercase letter and nothing else
+    ->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
+    //->whereAlpha('post') // Laravel helper function where it should be upper or lowercase letter and nothing else
 ;
