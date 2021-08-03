@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Posts;
 use App\Models\Post;
 use Illuminate\Support\Facades\File as FacadesFile;
 use Illuminate\Support\Facades\Route;
@@ -25,7 +26,7 @@ Route::get('/', function () {
 
 Route::get('/posts', function () {
 
-    $files = FacadesFile::files(resource_path("views/posts"));
+    // $files = FacadesFile::files(resource_path("views/posts"));
 
     // $posts = [];
 
@@ -79,10 +80,10 @@ Route::get('/posts', function () {
     );
 });
 
-Route::get('/post/{post}', function ($slug) {
+Route::get('/post/{post}', function (Post $post) {
     // Find a post by its slug and pass it to a view called "post"
     // $post = Post::find($slug);
-    $post = Post::findOrFail($slug);
+    // $post = Post::findOrFail($id);
 
     return view('post', [
         'post' => $post
