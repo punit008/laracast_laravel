@@ -81,7 +81,8 @@ Route::get('/posts', function () {
 
 Route::get('/post/{post}', function ($slug) {
     // Find a post by its slug and pass it to a view called "post"
-    $post = Post::find($slug);
+    // $post = Post::find($slug);
+    $post = Post::findOrFail($slug);
 
     return view('post', [
         'post' => $post
@@ -92,6 +93,6 @@ Route::get('/post/{post}', function ($slug) {
     // return view('post');
 })
     //->where('post', '[A-z]+') // Find one or more upper or lowercase letter and nothing else
-    ->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
+    //->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
     //->whereAlpha('post') // Laravel helper function where it should be upper or lowercase letter and nothing else
 ;

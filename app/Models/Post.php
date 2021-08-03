@@ -58,12 +58,15 @@ class Post
         //     }, $files
         // ); // array_map is sort of like a loop but it returns a new array. The second item is the thing you are looping over here $files.
     }
+
     public static function find($slug)
     {
 
-        $posts = static::all();
+ 
 
-        return $posts->firstWhere('slug', $slug);
+        $posts = static::all()->firstWhere('slug', $slug);
+
+        return $posts;
 
         // $path = __DIR__ . "/../resources/views/posts/{$slug}.html";
         // $path = resource_path("posts/{$slug}.html");
@@ -85,5 +88,16 @@ class Post
         //     return file_get_contents($path);
         // }); // In timer you can use helper like now()->addMinutes(20);
 
+    }
+
+    public static function findOrFail($slug)
+    {
+        $posts = static::find($slug);
+
+        if(! $posts) {
+            throw new ModelNotFoundException();
+        }
+
+        return $posts;
     }
 }
