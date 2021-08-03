@@ -80,7 +80,8 @@ Route::get('/posts', function () {
     );
 });
 
-Route::get('/post/{post}', function (Post $post) {
+Route::get('/post/{post:slug}', function (Post $post) {// Post::where('slug', $post)->firstOrFail()
+    
     // Find a post by its slug and pass it to a view called "post"
     // $post = Post::find($slug);
     // $post = Post::findOrFail($id);
