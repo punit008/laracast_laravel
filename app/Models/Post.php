@@ -11,4 +11,15 @@ class Post extends Model
 
     protected $guarded = ['id']; // Everything can be mass assigned except id.
     // protected $fillable = ['title'];
+
+    // public function getRouteKey()
+    // {
+    //     return 'slug';
+    // }
+
+    public function category()
+    {
+        //hasOne, hasMany, belongsTo, belongsToMany
+        return $this->belongsTo(Category::class);
+    }
 }

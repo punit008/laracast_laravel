@@ -1,10 +1,11 @@
 <?php
 
-use App\Models\Posts;
 use App\Models\Post;
-use Illuminate\Support\Facades\File as FacadesFile;
+use App\Models\Posts;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
+use Illuminate\Support\Facades\File as FacadesFile;
 
 
 /*
@@ -98,3 +99,11 @@ Route::get('/post/{post:slug}', function (Post $post) {// Post::where('slug', $p
     //->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
     //->whereAlpha('post') // Laravel helper function where it should be upper or lowercase letter and nothing else
 ;
+
+Route::get('categories/{category:slug}', function (Category $category) {
+    return view('posts',
+        [
+            'posts' => $category->post
+        ]
+    );
+});
