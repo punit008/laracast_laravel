@@ -27,6 +27,12 @@ Route::get('/', function () {
 
 Route::get('/posts', function () {
 
+    // Log Sql of the query
+
+    // \Illuminate\Support\Facades\DB::listen(function ( $query ) {
+    //     logger($query->sql, $query->bindings);
+    // });
+
     // $files = FacadesFile::files(resource_path("views/posts"));
 
     // $posts = [];
@@ -71,7 +77,9 @@ Route::get('/posts', function () {
 
     // }
 
-    $posts = Post::all();
+    // $posts = Post::all();
+    // Solve n+1 trap
+    $posts = Post::with('category')->get(); //If we building up the query use get.
 
     return view(
         'posts',
