@@ -3,6 +3,7 @@
 use App\Models\Post;
 use App\Models\Posts;
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Spatie\YamlFrontMatter\YamlFrontMatter;
 use Illuminate\Support\Facades\File as FacadesFile;
@@ -79,7 +80,7 @@ Route::get('/posts', function () {
 
     // $posts = Post::all();
     // Solve n+1 trap
-    $posts = Post::latest()->with('category')->get(); //If we building up the query use get. (Eager load or include)
+    $posts = Post::latest()->with('category','author')->get(); //If we building up the query use get. (Eager load or include)
 
     return view(
         'posts',
@@ -111,7 +112,15 @@ Route::get('/post/{post:slug}', function (Post $post) {// Post::where('slug', $p
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts',
         [
-            'posts' => $category->post
+            'posts' => $category->post->load(['category', 'author'])
+        ]
+    );
+});
+
+Route::get('author/{author:username}', function (User $author) {
+    return view('posts',
+        [
+            'posts' => $author->posts->load(['category', 'author'])
         ]
     );
 });
