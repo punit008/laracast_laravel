@@ -20,23 +20,28 @@
             </article>
 
         @endforeach --}}
+        
+     @include('_post-header')
 
-    @include('_post-header')
+    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">    
 
-    <main class="max-w-6xl mx-auto mt-6 lg:mt-20 space-y-6">
+        @if ($posts->count())
 
-        <x-post-featured-card></x-post-featured-card>
+            <x-post-grid :posts="$posts"></x-post-grid>
 
-        <div class="lg:grid lg:grid-cols-2">
-            <x-post-card></x-post-card>
-            <x-post-card></x-post-card>
-        </div>
+        @else
 
-        <div class="lg:grid lg:grid-cols-3">
-            <x-post-card></x-post-card>
-            <x-post-card></x-post-card>
-            <x-post-card></x-post-card>
-        </div>
-    </main>
+            <p>No Post Yet.</p>
+
+        @endif
+
+
+        {{-- <div class="lg:grid lg:grid-cols-3">
+            <x-post-card  :post= $post></x-post-card>
+            <x-post-card  :post= $post></x-post-card>
+            <x-post-card  :post= $post></x-post-card>
+        </div> --}}
+
+    </main> 
 
 </x-layout>

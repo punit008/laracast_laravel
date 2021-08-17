@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // Category::truncate();
         // Post::turncate();
 
-        Post::factory()->create();
+        Post::factory(5)->create();
         // \App\Models\User::factory(10)->create();
         // $user = \App\Models\User::factory()->create();
 

@@ -81,7 +81,6 @@ Route::get('/posts', function () {
     // $posts = Post::all();
     // Solve n+1 trap
     $posts = Post::latest()->with('category','author')->get(); //If we building up the query use get. (Eager load or include)
-
     return view(
         'posts',
         [
