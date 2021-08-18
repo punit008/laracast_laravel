@@ -19,6 +19,16 @@ class Post extends Model
  
    // protected $with = ['category','author']; //eager load relationship 
 
+    public function scopeFilter($query, array $filters)
+    {
+        if($filters['search'] ?? false)
+        {
+            $query
+            ->where('title', 'like', '%' . request('search') . '%')
+            ->orWhere('body', 'like', '%' . request('search') . '%');
+        }
+    }
+
     public function category()
     {
         //hasOne, hasMany, belongsTo, belongsToMany
@@ -29,4 +39,6 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
+
 }

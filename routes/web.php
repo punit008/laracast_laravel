@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Models\Post;
 use App\Models\Posts;
 use App\Models\Category;
@@ -26,7 +27,9 @@ Route::get('/', function () {
     // return ['foo' => 'bar']; // can pass the json to the page
 });
 
-Route::get('/posts', function () {
+Route::get('/posts', [PostController::class, 'index'])->name('posts');
+
+// Route::get('/posts', function () {
 
     // Log Sql of the query
 
@@ -80,38 +83,35 @@ Route::get('/posts', function () {
 
     // $posts = Post::all();
     // Solve n+1 trap
-    $posts = Post::latest()->with('category','author')->get(); //If we building up the query use get. (Eager load or include)
-    return view(
-        'posts',
-        [
-            'posts' => $posts
-        ]
-    );
-});
 
-Route::get('/post/{post:slug}', function (Post $post) {// Post::where('slug', $post)->firstOrFail()
+
+// });
+
+// Route::get('/post/{post:slug}', function (Post $post) {// Post::where('slug', $post)->firstOrFail()
     
-    // Find a post by its slug and pass it to a view called "post"
-    // $post = Post::find($slug);
-    // $post = Post::findOrFail($id);
-
-    return view('post', [
-        'post' => $post
-    ]);
+//     // Find a post by its slug and pass it to a view called "post"
+//     // $post = Post::find($slug);
+//     // $post = Post::findOrFail($id);
 
 
 
-    // return view('post');
-})
-    //->where('post', '[A-z]+') // Find one or more upper or lowercase letter and nothing else
-    //->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
-    //->whereAlpha('post') // Laravel helper function where it should be upper or lowercase letter and nothing else
-;
+
+
+//     // return view('post');
+// })
+//     //->where('post', '[A-z]+') // Find one or more upper or lowercase letter and nothing else
+//     //->where('post', '[A-z_\-]+') // Find one or more upper or lowercase letter including - in url and nothing else 
+//     //->whereAlpha('post') // Laravel helper function where it should be upper or lowercase letter and nothing else
+// ;
+
+Route::get('/post/{post:slug}', [PostController::class, 'show']);
 
 Route::get('categories/{category:slug}', function (Category $category) {
     return view('posts',
         [
-            'posts' => $category->post->load(['category', 'author'])
+            'posts' => $category->post->load(['category', 'author']),
+            'currentCategory' => $category,
+            'categories' => Category::all()
         ]
     );
 });
@@ -119,7 +119,8 @@ Route::get('categories/{category:slug}', function (Category $category) {
 Route::get('author/{author:username}', function (User $author) {
     return view('posts',
         [
-            'posts' => $author->posts->load(['category', 'author'])
+            'posts' => $author->posts->load(['category', 'author']),
+            'categories' => Category::all()
         ]
     );
 });
