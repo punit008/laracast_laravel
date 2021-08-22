@@ -31,7 +31,10 @@ class RegisterController extends Controller
 
         $attribute['password'] = bcrypt($attribute['password']);
         //Can use eloquent mutator
-        User::create($attribute);
+        $user = User::create($attribute);
+
+        auth()->login($user);
+
         // session()->flash('success', 'Your account had been created.');
         return redirect('/posts')->with('success', 'Your account had been created.');
     }
