@@ -10,7 +10,7 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->with('category','author')->get(); //If we building up the query use get. (Eager load or include)
+        $posts = Post::latest()->with('category', 'author')->get(); //If we building up the query use get. (Eager load or include)
         return view(
             'posts',
             [
@@ -29,6 +29,6 @@ class PostController extends Controller
 
     protected function getPost()
     {
-      return Post::latest()->filter(request(['search']))->get();
+      return Post::latest()->filter(request(['search', 'category']))->get();
     }
 }

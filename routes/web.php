@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\RegisterController;
 use App\Models\Post;
 use App\Models\Posts;
 use App\Models\Category;
@@ -116,6 +117,7 @@ Route::get('categories/{category:slug}', function (Category $category) {
     );
 });
 
+
 Route::get('author/{author:username}', function (User $author) {
     return view('posts',
         [
@@ -124,3 +126,7 @@ Route::get('author/{author:username}', function (User $author) {
         ]
     );
 });
+
+
+Route::get('register', [RegisterController::class, 'create']);
+Route::post('register', [RegisterController::class, 'store']);
